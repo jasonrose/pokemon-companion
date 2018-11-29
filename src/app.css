@@ -1,0 +1,12 @@
+/**
+ * @format
+ */
+
+.app {
+  margin: auto;
+  max-width: 600px;
+  min-width: 320px;
+  width: 100%;
+  display: flex;
+  overflow-x: hidden;
+}

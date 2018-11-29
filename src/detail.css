@@ -1,0 +1,38 @@
+/**
+ * @format
+ */
+
+.detail {
+  width: 100%;
+}
+
+.types {
+  display: grid;
+  grid-column-gap: 12px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.affinities {
+  align-items: center;
+  display: grid;
+  grid-auto-flow: row;
+  grid-column-gap: 8px;
+  grid-row-gap: 8px;
+  grid-template-columns: 1fr 50px 50px 1fr;
+}
+
+.affinity_percentage {
+  text-align: center;
+}
+
+.title {
+  font-size: 2.441em;
+  line-height: 1.2;
+  margin: 0.5em 0;
+}
+
+.subtitle {
+  font-size: 1.563em;
+  line-height: 1.2;
+  margin: 0.5em 0;
+}
