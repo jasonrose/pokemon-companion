@@ -13,7 +13,7 @@ const App = () => {
   return (
     <div className="app">
       <Switch>
-        <Route path="/pokemon/:id" component={Detail} />
+        <Route path="/pokemon/:number" component={Detail} />
         <Route path="/" component={Detail} />
       </Switch>
     </div>

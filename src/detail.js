@@ -4,63 +4,68 @@
  */
 
 import * as React from "react";
-import { stringToElement } from "./element";
+import { Element, elements } from "./element";
+import pokemon, { type AffinityPercentageType } from "./pokemon";
+import {
+  Redirect,
+  type RouterHistory,
+  type Location,
+  type Match
+} from "react-router-dom";
 import "./detail.css";
 
 type AffinityPercentagePropsType = {|
-  percentage: "25" | "50" | "100" | "200" | "400"
+  percentage: AffinityPercentageType
 |};
 
 function AffinityPercentage(props: AffinityPercentagePropsType) {
   return <span className="affinity_percentage">{props.percentage}%</span>;
 }
 
-const Detail = () => {
+type DetailPropsType = {|
+  history: RouterHistory,
+  location: Location,
+  match: Match
+|};
+
+const Detail = (props: DetailPropsType) => {
+  let number = props.match.params.number;
+  if (number == null) {
+    // return <Redirect to="/" />;
+    number = "1";
+  }
+  const entry = pokemon[number];
+  if (entry == null) {
+    return <Redirect to="/" />;
+  }
   return (
     <article className="detail">
-      <h1 className="title">Bulbasaur</h1>
+      <h1 className="title">{entry.name}</h1>
       <div className="types">
-        {stringToElement("grass")} {stringToElement("poison")}
+        {entry.types.map(element => (
+          <Element element={element} key={element} />
+        ))}
       </div>
       <section>
         <h2 className="subtitle">Damage Taken</h2>
         <div className="affinities">
-          {stringToElement("bug")}
-          <AffinityPercentage percentage="100" />
-          <AffinityPercentage percentage="100" />
-          {stringToElement("dark")}
-          {stringToElement("dragon")}
-          <AffinityPercentage percentage="100" />
-          <AffinityPercentage percentage="50" />
-          {stringToElement("electric")}
-          {stringToElement("fairy")}
-          <AffinityPercentage percentage="50" />
-          <AffinityPercentage percentage="50" />
-          {stringToElement("fighting")}
-          {stringToElement("fire")}
-          <AffinityPercentage percentage="200" />
-          <AffinityPercentage percentage="200" />
-          {stringToElement("flying")}
-          {stringToElement("ghost")}
-          <AffinityPercentage percentage="100" />
-          <AffinityPercentage percentage="50" />
-          {stringToElement("grass")}
-          {stringToElement("ground")}
-          <AffinityPercentage percentage="100" />
-          <AffinityPercentage percentage="200" />
-          {stringToElement("ice")}
-          {stringToElement("normal")}
-          <AffinityPercentage percentage="100" />
-          <AffinityPercentage percentage="100" />
-          {stringToElement("poison")}
-          {stringToElement("psychic")}
-          <AffinityPercentage percentage="200" />
-          <AffinityPercentage percentage="100" />
-          {stringToElement("rock")}
-          {stringToElement("steel")}
-          <AffinityPercentage percentage="100" />
-          <AffinityPercentage percentage="50" />
-          {stringToElement("water")}
+          {elements.map((element, i) => {
+            const affinity =
+              entry.affinities[element] == null
+                ? "100"
+                : entry.affinities[element];
+            return i % 2 === 0 ? (
+              <React.Fragment key={element}>
+                <Element element={element} />
+                <AffinityPercentage percentage={affinity} />
+              </React.Fragment>
+            ) : (
+              <React.Fragment key={element}>
+                <AffinityPercentage percentage={affinity} />
+                <Element element={element} />
+              </React.Fragment>
+            );
+          })}
         </div>
       </section>
     </article>
