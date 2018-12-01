@@ -8,5 +8,6 @@
   min-width: 320px;
   width: 100%;
   display: flex;
+  flex-flow: column;
   overflow-x: hidden;
 }

@@ -1,0 +1,25 @@
+/**
+ * @format
+ */
+
+.react-autosuggest__container {
+  display: flex;
+  flex-flow: column;
+  align-items: stretch;
+  padding: 0 8px;
+}
+
+.react-autosuggest__input {
+  border-left: 0;
+  border-top: 0;
+  border-right: 0;
+  height: 2em;
+}
+
+.react-autosuggest__suggestions-container {
+  padding: 4px 8px;
+}
+
+.react-autosuggest__suggestion {
+  line-height: 2em;
+}

@@ -1,5 +1,6 @@
 *~
 .yarn-cache
+foobar.js
 
 node_modules
 dist
