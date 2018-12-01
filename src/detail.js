@@ -6,6 +6,7 @@
 import * as React from "react";
 import { Element, elements } from "./element";
 import pokemon, { type AffinityPercentageType } from "./pokemon";
+import Helmet from "react-helmet";
 import {
   Redirect,
   type RouterHistory,
@@ -45,8 +46,18 @@ const Detail = (props: DetailPropsType) => {
   if (entry == null) {
     return <Redirect to="/" />;
   }
+  const url = `https://jasonrose.github.io/pokemon-companion/#/${entry.number}`;
   return (
     <>
+      <Helmet>
+        <title>Pokémon Companion - {entry.name}</title>
+        <link rel="canonical" href={url} />
+        <meta property="og:url" content={url} />
+        <meta
+          property="og:description"
+          content={`${entry.name} is a ${entry.types.join("/")}-type pokémon.`}
+        />
+      </Helmet>
       <header>
         <Search history={props.history} />
       </header>
