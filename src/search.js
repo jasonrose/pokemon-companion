@@ -5,17 +5,15 @@
 
 import * as React from "react";
 import Autosuggest from "react-autosuggest";
-import {
-  type RouterHistory,
-  type Location,
-  type Match
-} from "react-router-dom";
+import { type RouterHistory } from "react-router-dom";
 import pokedex, { type PokemonEntryType } from "./pokemon";
 import "./search.css";
 
-const pokemonValues = Object.values(pokedex);
+const pokemonValues = pokedex;
 
-const getSuggestions = value => {
+const getSuggestions: (
+  value: string
+) => $ReadOnlyArray<PokemonEntryType> = value => {
   const inputValue = value.trim().toLowerCase();
   const inputLength = inputValue.length;
 
@@ -28,12 +26,14 @@ const getSuggestions = value => {
 
 const renderSuggestion = suggestion => <div>{suggestion.name}</div>;
 
-const getSuggestionValue = suggestion => suggestion.number;
+const getSuggestionValue = suggestion => suggestion.name;
+
+const shouldRenderSuggestions = () => {
+  return true;
+};
 
 type SearchPropsType = {|
-  history: RouterHistory,
-  location: Location,
-  match: Match
+  history: RouterHistory
 |};
 
 type SearchStateType = {|
@@ -45,19 +45,31 @@ class Search extends React.Component<SearchPropsType, SearchStateType> {
   props: SearchPropsType;
   state: SearchStateType = { value: "", suggestions: [] };
 
-  _handleSearchChange = (_event, { newValue }) => {
+  _handleSearchChange = (
+    _event: mixed,
+    { newValue }: {| newValue: string |}
+  ) => {
     this.setState({
       value: newValue
     });
   };
 
-  _handleSuggestionsFetchRequested = ({ value }) => {
+  _handleSuggestionsClearRequested = () => {
+    this.setState({
+      suggestions: []
+    });
+  };
+
+  _handleSuggestionsFetchRequested = ({ value }: {| value: string |}) => {
     this.setState({
       suggestions: getSuggestions(value)
     });
   };
 
-  _handleSuggestionSelected = (_event, { suggestion }) => {
+  _handleSuggestionSelected = (
+    _event: mixed,
+    { suggestion }: {| suggestion: PokemonEntryType |}
+  ) => {
     this.props.history.push(`/pokemon/${suggestion.number}`);
   };
 
@@ -70,14 +82,14 @@ class Search extends React.Component<SearchPropsType, SearchStateType> {
 
     return (
       <>
-        <h1 className="title">Poké Companion</h1>
         <Autosuggest
-          alwaysRenderSuggestions
           suggestions={this.state.suggestions}
+          onSuggestionsClearRequested={this._handleSuggestionsClearRequested}
           onSuggestionsFetchRequested={this._handleSuggestionsFetchRequested}
           onSuggestionSelected={this._handleSuggestionSelected}
           getSuggestionValue={getSuggestionValue}
           renderSuggestion={renderSuggestion}
+          shouldRenderSuggestions={shouldRenderSuggestions}
           inputProps={inputProps}
         />
       </>

@@ -15,7 +15,7 @@ const options = {
   }
 };
 
-const output = {};
+const output = [];
 
 async function req(number) {
   const opt = {
@@ -71,7 +71,7 @@ async function req(number) {
         })()
       };
 
-      output[String(entry.number)] = entry;
+      output.push(entry);
     })
     .catch(err => {
       console.log(err);

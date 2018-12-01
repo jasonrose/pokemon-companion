@@ -6,20 +6,32 @@
   display: flex;
   flex-flow: column;
   align-items: stretch;
-  padding: 0 8px;
+  position: relative;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
 }
 
 .react-autosuggest__input {
-  border-left: 0;
-  border-top: 0;
-  border-right: 0;
+  border: 0;
   height: 2em;
+  padding: 0 8px;
 }
 
-.react-autosuggest__suggestions-container {
-  padding: 4px 8px;
+.react-autosuggest__suggestions-container--open {
+  background: white;
+  padding: 4px 0;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
 }
 
 .react-autosuggest__suggestion {
   line-height: 2em;
+  padding: 0 8px;
+}
+
+.react-autosuggest__suggestion--highlighted {
+  background-color: #eee;
 }
